@@ -7,11 +7,6 @@ import java.util.List;
 
 
 public class hillcipher {
-	/*
-	 * TODO: finish hill cipher encryption function
-	 * TODO: create output formatting function
-	 * TODO: review grading rubric and compare for correctness
-	 */
 
 	public static void main(String[] args) {
 		String keyFileName = args[0];
@@ -23,9 +18,22 @@ public class hillcipher {
 		key = parseKey(keyFileName);
 		plainText = parsePlainText(plainTextFileName);
 		cipherText = hillEncrypt(key, plainText);	
+		
+		keyFormatPrint(key);
+		System.out.println("\nPlaintext:\n");
+		formatPrint(plainText);
+		System.out.println("\nCiphertext:\n");
 		formatPrint(cipherText);
 	}
 	
+	private static void keyFormatPrint(int[][] key) {
+		System.out.println("Key: ");
+		
+		for( int i = 0; i < key.length; i++) {
+			System.out.println(Arrays.toString(key[i]));
+		}
+	}
+
 	private static String hillEncrypt(int[][] key, String p) {
 		int n = key.length;
 		char[][] pBlock = chunkArray(p.toCharArray(), n);
@@ -50,10 +58,20 @@ public class hillcipher {
 		return c.toString();
 	}
 	
-    private static void formatPrint(String string) {
+    private static void formatPrint(String s) {
     	int n = 80;
+    	StringBuilder sb = new StringBuilder();
     	
-    	
+    	for( int i = 0; i < s.length(); i++) {
+    		if(sb.length() == n) {
+    			System.out.println(sb.toString());
+    			sb.setLength(0);
+    		}
+    		
+    		sb.append(s.charAt(i));
+    	}
+		System.out.println(sb.toString());
+
 	}
 
 	public static int alphabetToNumber(char a) {
@@ -77,7 +95,6 @@ public class hillcipher {
 			}
 		}
 		
-		System.out.println(Arrays.deepToString(key));
 		return key;
 	}
 
@@ -91,7 +108,6 @@ public class hillcipher {
 			p += s;
 		}
 		
-		System.out.println(p);
 		return p;
 	}
 
@@ -143,7 +159,7 @@ public class hillcipher {
             if (length < chunkSize) {
             	int j = array.length - start;
             	while( j < temp.length) {
-            		temp[j] = 'X';
+            		temp[j] = 'x';
             		j++;
             	}
             }
